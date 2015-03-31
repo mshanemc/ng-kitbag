@@ -1,0 +1,38 @@
+<apex:page showHeader="true" sidebar="true">
+
+	<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapNamespaced, 'dist/css/bootstrap.css')}" media="all" />
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+
+	<apex:includeScript value="{!URLFOR($Resource.bootstrapNamespaced, 'dist/js/bootstrap.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.bootstrapNamespaced, 'dist/js/bootstrap-typeahead.js')}" />
+
+	<div class="bs">
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="alert col-md-12">
+					<h2>Video Gallery</h2>  
+					
+					<hr/>
+					
+					<p>This is the package for you!</p>
+					
+					<p>To achieve this, we create a "bootstrap section" anywhere on the page.  All it needs is a class called "bs".  From there, all children will be bootstrap styling.</p>
+
+					<p>See the markup on this page for an example.</p>
+
+					<br/>
+
+					<a href="https://org62.my.salesforce.com/_ui/core/userprofile/UserProfilePage?u=0053000000A1Th9&tab=sfdc.ProfilePlatformFeed" class="btn btn-primary">Shane McLaughlin, Platform Architect @ salesforce.com</a> 
+				</div>
+				
+			</div>
+
+		</div>
+			
+						
+	</div>	
+
+
+</apex:page>

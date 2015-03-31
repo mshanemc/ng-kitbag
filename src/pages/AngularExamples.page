@@ -1,0 +1,126 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+	<c:AngularScripts/>
+
+
+	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+	<head>
+		
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<title>Angular Examples</title>
+
+	</head>
+
+	<body ng-controller="appCtrl">
+		<div class="container-fluid" >
+			<div class="row">
+
+				<div class="col-md-12 well well-large">
+					<h3>Example 1: input binding and ng-if</h3>
+					<div class="checkbox">
+					    <label>
+					      <input type="checkbox" ng-model="checkbox1"/> Checkbox1
+	 				    </label>
+					</div>
+					<div class="alert alert-info" ng-if="checkbox1">This text will show up if checkbox1 is checked</div>
+
+				</div>
+
+
+
+				<div class="col-md-12 well well-large">
+					<h3>Example 2: input binding, calculation, and number formatting</h3>
+					<div class="form-group">
+					    <label>
+	 				    	Number to multiply by 7
+	 				    </label>
+	 				    <input type="number" ng-model="calcInput1" class="form-control"/> 
+					</div>
+					
+					<p>no decimal places: {{calcInput1*7 | number:0}}</p>
+	 				<p>3 decimal places: {{calcInput1*7 | number:3}}</p>
+				</div>
+
+				<div class="col-md-12 well well-large">
+					<h3>Example 3: styling based on data (ng-class)</h3>
+					<div class="form-group">
+					    <label>
+	 				    	Styling
+	 				    </label>
+	 				    <select ng-model="styleSelector" class="form-control">
+	 				    	<option value="red">Red</option>
+	 				    	<option value="green">Green</option>
+	 				    	<option value="blue">Blue</option>
+	 				    </select> 
+					</div>
+					<div class="alert" ng-class="{'alert-success':styleSelector==='green', 'alert-danger':styleSelector==='red', 'alert-info':styleSelector==='blue'}">This div can change colors depending on some data</div>
+					
+					<h6 ng-class="{'text-success':styleSelector==='green', 'text-danger':styleSelector==='red', 'text-info':styleSelector==='blue'}"><b>And so can some simple text</b></h6>
+				</div>
+
+				<!-- <div class="col-md-12 well well-large">
+					<h3>Example 4: best datepicker ever</h3>
+					<p class="input-group">
+
+					    <input type="text" class="form-control" datepicker-popup="shortDate" ng-model="temp.startDate" datepicker-close-text="Close" show-weeks="false" show-button-bar="false"/>
+						<span class="input-group-btn">
+                			<button type="button" class="btn btn-default" >
+                				<i class="glyphicon glyphicon-calendar"></i>
+                			</button>
+              			</span>
+              		</p>
+
+						{{temp.startDate | date : 'MMM dd, yyyy'}}
+				</div>
+ -->
+				
+
+				
+			</div> <!-- row -->
+
+		</div> <!-- container-fluid -->
+
+		
+
+	
+	<script type="text/javascript">
+	
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
+
+		function appCtrl($scope, vfr){
+
+			//here's a sample of the fun of vfr
+
+			vfr.query("Select Id, Name from Account").then(
+
+				function (response){$scope.accounts = response.records;},
+				function (error){console.log(error);}
+
+			)
+		};
+
+	</script>
+	
+	<!-- include this section for the streaming API if desired -->
+
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/> -->
+
+
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+	</body>
+	</html>
+	
+	
+
+</apex:page>

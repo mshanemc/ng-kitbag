@@ -1,0 +1,85 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+	<c:AngularScripts/>
+
+
+	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+	<head>
+		
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<title>Angular Examples</title>
+
+	</head>
+
+	<body ng-controller="appCtrl">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-info">
+						<h3>Angular Demo Components</h3>
+						<a href="https://org62.my.salesforce.com/a2x30000000A1vP" class="btn btn-warning">View Demo Component</a>
+						<a href="/packageShortcut" class="btn btn-primary">Install Package</a>
+					</div>
+					<div class="alert alert-success">
+
+						<h4>What's included</h4>
+						<ul>
+							<li>Example Pages (links)</li>
+							<ul>
+								<li><a href="{!$Page.AngularExamples}">Basic Angular Examples (no javascript)</a></li>
+
+								<li><a href="{!$Page.ngforceexample}">Using ngForce to connect to salesforce data</a></li>
+								<li><a href="{!$Page.ngforceexample2}">Slightly more sophisticated ngforce page, with quick search, filters, etc.  Accounts and Contacts by Greg Wadley</a></li>
+
+								<li><a href="{!$Page.FoundationBSSF1}">Making it look like the salesforce1 UI</a></li>
+								<!-- <li><a href="{!$Page.mobileKnowledge}">SF1 themed knowledge search using SOSL with option to post to Chatter Questions.</a> Create a tab and add it to your mobile navigation.  NB: requires knowledge articles to see the results</li> -->
+								<li><a href="{!$Page.alohaUI}">Making it look like it belongs in the standard salesforce UI (aloha)</a></li>
+								<li><a href="{!$Page.BootstrapExample}">I need my own themed version of bootstrap, but still need that neat namespace trick</a></li>
+							</ul>
+
+							<li>Ngforce (plus its tests, required components, etc)</li>
+							<li>StreamingAPI static resources (example to come later)</li>
+							<li>AngularScripts (vf component used on all these pages).  Simply drop them in the top of your page to get all the goodness, maintained and versioned in one place</li>
+							<li>Namespaced bootstrap</li>
+							<li>Bootstrap sf1 theme</li>
+
+						</ul>
+					</div>
+
+					<div class="alert alert-danger">
+						<h4>Need help?</h4>  
+
+						Things to read/watch:
+						<ul>
+							<li><a href="https://github.com/noeticpenguin/ngForce">ngForce github</a></li>
+							<li><a href="hhttp://www.youtube.com/watch?v=11OUWMgMVOc">ngForce df13 video (somewhat out of date, but good demo/overview)</a></li>
+
+							<li><a href="https://egghead.io/series/angularjs-app-from-scratch-getting-started">General non-force angular videos from egghead</a></li>
+							<li><a href="http://toddmotto.com/ultimate-guide-to-learning-angular-js-in-one-day/">Great overview from Todd Motto</a></li>
+
+							<li><a href="http://developer.salesforcefoundation.org/bootstrap-sf1/">Bootstrap SF1</a> user guide.  <a href="https://github.com/SalesforceFoundation/bootstrap-sf1">Code here</a>'cuz some customer will want their colors on it</li>
+							<li><a href="http://getbootstrap.com/css/">General bootstrap guide</a></li>
+
+							<li><a href="http://getbootstrap.com/css/">General bootstrap guide</a></li>
+
+						</ul>
+
+						<hr/>
+						Still got issues?  Chatter <a href="https://org62.my.salesforce.com/_ui/core/userprofile/UserProfilePage?u=0053000000A1Th9&tab=sfdc.ProfilePlatformFeed">@Shane McLaughlin </a>on the demo component itself: <a href="https://org62.my.salesforce.com/a2x30000000A1vP">https://org62.my.salesforce.com/a2x30000000A1vP</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+	</body>
+	</html>
+	
+	
+
+</apex:page>

@@ -1,0 +1,84 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+	<c:AngularScripts/>
+
+	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+	<head>
+		
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<title>ngForce examples</title>
+
+	</head>
+
+	<body ng-controller="appCtrl">
+
+		<div class="container-fluid" >
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-info">This should be a true statement if angular is working: 2 + 2 = {{2+2}}</div>
+				</div>
+				
+				<div class="col-md-12">
+					<h3>This should be the list of acccounts, if ngforce/vfr is working</h3>
+
+					<table class="table table-striped">
+						<tbody>
+							<tr ng-repeat="account in accounts">
+								<td>{{account.Name}}</td>
+								<td>{{account.Id}}</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div> <!-- row -->
+		</div> <!-- container-fluid -->
+
+		
+
+
+	<script type="text/javascript">
+	
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
+
+		function appCtrl($scope, vfr){
+
+			//here's a sample of the fun of vfr
+
+			vfr.query("Select Id, Name from Account").then(
+
+				function (response){
+					$scope.accounts = response.records;
+				},
+				function (error){
+					console.log(error);
+				}
+
+			)
+		};
+
+	</script>
+	
+	<!-- include this section for the streaming API if desired -->
+
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/> -->
+
+
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+	</body>
+	</html>
+	
+	
+
+</apex:page>

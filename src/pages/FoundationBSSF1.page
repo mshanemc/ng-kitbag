@@ -1,0 +1,266 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+    	<c:AngularScripts/>
+
+
+    <html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+    <head>
+        
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link href="{!urlfor($Resource.bootstrapSF1, 'dist/css/bootstrap.min.css')}" rel="stylesheet" type="text/css"/>
+        <link href="{!urlfor($Resource.bootstrapSF1, 'dist/css/bootstrap-namespaced.min.css')}" rel="stylesheet" type="text/css"/>
+
+        <title>ngForce examples</title>
+
+    </head>
+
+    <body ng-controller="appCtrl" class="bootstrap-sf1">
+
+        <div class="page-header page-header-anchor context-thanks">
+          <div class="container-fluid">
+	            <h1>Shane's Custom Visualforce Page</h1>
+	            <p>Bootstrap SF1 (Salesforce Foundation!)</p>
+          </div>
+        </div>
+
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-md-12">
+
+                	<p>Salesforce1 makes extensive use of the card UI popularized by twitter/google.  Any div can be class="card"</p>
+
+                	<hr/>
+                    
+                    <h4>These cards are separated</h4>
+					
+					<span ng-repeat="account in accounts">
+	                    <a class="card" ng-click="navigate(account.Id)">
+							<div class="card-heading">
+								{{account.Name}}
+							</div>      
+							<ul class="card-detail card-detail-labels">
+								<li>
+									<label class="card-detail-label">Annual Revenue</label>
+									<span class="card-detail-value">{{account.AnnualRevenue | number:0}}</span>
+								</li>
+								<li>
+									<label class="card-detail-label">Billing City</label>
+									<span class="card-detail-value">{{account.BillingCity}}</span>
+								</li>
+							</ul>   
+	                    </a>
+	                </span>
+					
+					<hr/>
+				</div>
+
+				<div class="col-md-12">
+					<h4>They can be responsive (3-grid)</h4>
+				
+					<div class="row">
+						
+						<span ng-repeat="account in accounts" class="col-md-4">
+		                    <a class="card" ng-click="navigate(account.Id)">
+								<div class="card-heading">
+									{{account.Name}}
+								</div>      
+								<ul class="card-detail card-detail-labels">
+									<li>
+										<label class="card-detail-label">Annual Revenue</label>
+										<span class="card-detail-value">{{account.AnnualRevenue | number:0}}</span>
+									</li>
+									<li>
+										<label class="card-detail-label">Billing City</label>
+										<span class="card-detail-value">{{account.BillingCity}}</span>
+									</li>
+								</ul>   
+		                    </a>
+		                </span>
+					</div>
+
+					<hr/>
+
+					<h4>How about some nice forms?</h4>
+
+					<form>
+					  <fieldset>
+					    <legend>Login for greatness</legend>
+					    <div class="form-group">
+					      <label for="exampleInputEmail">Email address</label>
+					      <input type="text" class="form-control" id="exampleInputEmail" placeholder="Enter email" autocomplete="off" />
+					    </div>
+					    <div class="form-group">
+					      <label for="exampleInputPassword">Password</label>
+					      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" autocomplete="off" />
+					    </div>
+					    <div class="checkbox">
+					      <label>
+					        <input type="checkbox"/>Check me out
+					      </label>
+					    </div>
+
+					    <button type="submit" class="btn btn-default">Submit</button>
+					  </fieldset>
+					</form>
+
+				</div>
+					
+
+
+
+
+
+				
+				<div class="col-md-12">	
+					<hr/>
+				
+                    <h4>Oooh, pretty icons! (context)</h4>
+
+	                <span ng-repeat="account in accounts">
+	                    <a class="card context-account" ng-click="navigate(account.Id)">
+							<div class="card-heading">
+								{{account.Name}}
+							</div>      
+							<ul class="card-detail card-detail-labels">
+								<li>
+									<label class="card-detail-label">Annual Revenue</label>
+									<span class="card-detail-value">{{account.AnnualRevenue | number:0}}</span>
+								</li>
+								<li>
+									<label class="card-detail-label">Billing City</label>
+									<span class="card-detail-value">{{account.BillingCity}}</span>
+								</li>
+							</ul>   
+	                    </a>
+	                </span>
+
+
+					<hr/>
+
+
+	                <div class="card-list">
+	                	<div class="card-list-heading">
+	                		<h3>These cards are not separated, but have a heading</h3>
+	                	</div>
+
+	                	<span ng-repeat="account in accounts">
+		                    <a class="card" ng-click="navigate(account.Id)">
+								<div class="card-heading">
+									{{account.Name}}
+								</div>      
+								<ul class="card-detail card-detail-labels">
+									<li>
+										<label class="card-detail-label">Annual Revenue</label>
+										<span class="card-detail-value">{{account.AnnualRevenue | number:0}}</span>
+									</li>
+									<li>
+										<label class="card-detail-label">Billing City</label>
+										<span class="card-detail-value">{{account.BillingCity}}</span>
+									</li>
+								</ul>   
+		                    </a>
+		                </span>
+
+	                </div>
+					
+
+
+					<hr/>
+
+
+					<h4>Put anything you want in the cards</h4>
+					<span ng-repeat="account in accounts">
+	                    <div class="card" ng-click="navigate(account.Id)">
+							<div class="card-heading ">
+								<span class="pull-right">
+									<button type="button" class="btn btn-xs btn-danger">Order Ninja Attack</button>									
+								</span> 
+
+								{{account.Name}}
+							</div>      
+							<ul class="card-detail card-detail-labels">
+								<li>
+									<label class="card-detail-label">Annual Revenue</label>
+									<span class="card-detail-value">{{account.AnnualRevenue | number:0}}</span>
+								</li>
+								<li>
+									<label class="card-detail-label">Billing City</label>
+									<span class="card-detail-value">{{account.BillingCity}}</span>
+								</li>
+													
+							</ul>   
+	                    </div>
+	                </span>
+
+
+					<hr/>
+
+
+	                <h4>or just use them as containers for whatever</h4>
+
+					<div class="card">
+						<div class="card-heading">
+							<img src="http://www2.sfdcstatic.com/common/assets/img/logo-company.png" alt="" class="img img-responsive"/>
+
+							<br/>
+							<img src="http://www.exacttarget.com/sites/exacttarget/files/styles/half/public/uploads/salesforce1.png?itok=MKeM4Q0p"
+							 alt="" class="img img-responsive"/>
+
+
+						</div>
+							
+					</div>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container-fluid -->
+
+        
+
+
+    <script type="text/javascript">
+    
+        //here you can include the script, or move this to a VF component and then include the c: on the page.
+
+        var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
+
+        function appCtrl($scope, vfr){
+
+            //here's a sample of the fun of vfr
+            vfr.query("Select Id, Name, AnnualRevenue, BillingCity, Phone from Account").then(
+
+                function (response){
+                    $scope.accounts = response.records;
+                },
+                function (error){
+                    console.log(error);
+                }
+            )
+
+            //salesforce will "protect" you from running js from the page, as in href="javasript: doSomething();"
+            $scope.navigate = function(recordId){
+            	sforce.one.navigateToSObject(recordId);
+            }
+        };
+
+    </script>
+    
+    <!-- include this section for the streaming API if desired -->
+
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+    <script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+    <script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+    <script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/> -->
+
+
+    <c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+    </body>
+    </html>
+    
+    
+
+</apex:page>
