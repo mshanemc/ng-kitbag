@@ -1,0 +1,76 @@
+<apex:page showHeader="true" sidebar="true">
+
+	<c:AngularScripts/>
+
+	<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapNamespaced, 'dist/css/bootstrap.css')}" media="all" />
+
+	<apex:sectionHeader title="MyHeaderTitle" subtitle="MyHeaderSubTitle" />
+	<apex:pageBlock title="MyPageBlockTitle">
+		<apex:pageBlockSection columns="1">
+			
+			<span ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+				<span ng-controller="appCtrl" class="bs">
+					<div class="container-fluid" >
+						<div class="row">
+							<div class="col-md-12">
+								<p>This should be the list of acccounts, if ngforce/vfr is working</p>
+
+								<table class="table table-striped">
+									<tbody>
+										<tr ng-repeat="account in accounts">
+											<td>{{account.Name}}</td>
+											<td>{{account.Id}}</td>
+										</tr>
+									</tbody>
+								</table>
+								
+							</div>
+						</div> <!-- row -->
+					</div> <!-- container-fluid -->
+					
+
+				</span>
+			</span>
+		</apex:pageBlockSection>
+			
+	</apex:pageBlock>
+
+	
+
+
+	<script type="text/javascript">
+	
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
+
+		function appCtrl($scope, vfr){
+
+			//here's a sample of the fun of vfr
+
+			vfr.query("Select Id, Name from Account").then(
+
+				function (response){
+					$scope.accounts = response.records;
+				},
+				function (error){
+					console.log(error);
+				}
+
+			)
+		};
+
+	</script>
+	
+	<!-- include this section for the streaming API if desired -->
+
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/> -->
+
+
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+</apex:page>
