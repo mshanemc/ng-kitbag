@@ -1,0 +1,24 @@
+<apex:component layout="none">
+
+	
+	<!-- Javascript -->
+		<apex:includescript value="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"/>
+		
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'lib/safeApply.js')}"/>				
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'lib/restangular.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'lib/lo-dash.compat.js')}"/>
+
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'jsSrc/ngForce.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'jsSrc/ngForce-visualForceRemoting.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'jsSrc/ngForce-encodedUriQuery.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'jsSrc/ngForce-sfrquery.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.NgForce, 'jsSrc/ngForce-sfr.js')}"/>
+
+		<!-- some extra useful angular ui widgets, like tabs and datepicker. -->
+		<apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"/>
+
+		<!-- momentJs, handy for JS remoting date issues -->
+		<apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"/>
+
+
+</apex:component>
