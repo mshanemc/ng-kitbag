@@ -1,3 +1,8 @@
+<a href="https://githubsfdeploy.herokuapp.com?owner=mshanemc&repo=ng-kitbag">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
+</a>
+
 ### ng-kitbag
 
 This contains items adapated from the following:
