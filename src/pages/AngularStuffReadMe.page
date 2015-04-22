@@ -33,7 +33,10 @@
 								<li><a href="{!$Page.AngularExamples}">Basic Angular Examples (no javascript)</a></li>
 
 								<li><a href="{!$Page.ngforceexample}">Using ngForce to connect to salesforce data</a></li>
+
 								<li><a href="{!$Page.ngforceexample2}">Slightly more sophisticated ngforce page, with quick search, filters, etc.  Accounts and Contacts by Greg Wadley</a></li>
+
+								<li><a href="{!$Page.ngupdateexample}">Using ngForce to create/update SF records</a></li>
 
 								<li><a href="{!$Page.FoundationBSSF1}">Making it look like the salesforce1 UI</a></li>
 								<!-- <li><a href="{!$Page.mobileKnowledge}">SF1 themed knowledge search using SOSL with option to post to Chatter Questions.</a> Create a tab and add it to your mobile navigation.  NB: requires knowledge articles to see the results</li> -->

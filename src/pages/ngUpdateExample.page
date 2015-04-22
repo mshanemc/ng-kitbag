@@ -1,0 +1,145 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+	<c:AngularScripts/>
+
+	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+	<head>
+		
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<title>ngForce create/update examples</title>
+
+	</head>
+
+	<body ng-controller="appCtrl">
+
+		<div class="container-fluid" >
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-info">This page lets you create and update lead records</div>
+				</div>
+				
+				<div class="col-md-12">
+					<div class="well well-large">
+						<input type="text" class="form-control" ng-model="searchText" placeholder="filter by name/company/title/status/etc"/>
+					</div>
+						
+					<table class="table">
+						<thead>
+							<tr>
+								<th>First</th>
+								<th>Last</th>
+								<th>Company</th>
+								<th>Title</th>
+								<th>Phone</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="lead in leads | filter:searchText" ng-class="
+								{
+									'success':lead.Status==='Qualified', 
+									'danger':lead.Status==='Not Qualified',
+									'active':lead.Status==='Contacted',
+								}">
+								<td><a ng-href="/{{lead.Id}}">{{lead.FirstName}}</a></td>
+								<td><a ng-href="/{{lead.Id}}">{{lead.LastName}}</a></td>
+								<td>{{lead.Company}}</td>
+								<td>{{lead.Title}}</td>
+								<td>{{lead.Phone}}</td>
+								<td>{{lead.Status}}</td>
+								<td>
+									<a href="" class="btn btn-success" ng-click="updateLead(lead.Id, 'Qualified', $index)">Qualified</a>
+									<a href="" class="btn btn-danger" ng-click="updateLead(lead.Id, 'Not Qualified', $index)">Not Qualified</a>
+									<a href="" class="btn btn-default" ng-click="updateLead(lead.Id, 'Contacted', $index)">Contacted</a>
+								</td>
+
+							</tr>
+							<tr>
+								<td>
+									<input type="text" class="form-control" placeholder="First Name" ng-model="newLead.FirstName"/>
+								</td>
+								<td>
+									<input type="text" class="form-control" placeholder="Last Name" ng-model="newLead.LastName"/>
+								</td>
+								<td><input type="text" class="form-control" placeholder="Company" ng-model="newLead.Company"/></td> 
+								<td><input type="text" class="form-control" placeholder="Title" ng-model="newLead.Title"/></td>
+								<td><input type="text" class="form-control" placeholder="Phone" ng-model="newLead.Phone"/></td>
+								<td></td>
+								<td>
+									<a href="" class="btn btn-primary" ng-click="addNewLead()">Add Lead</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div> <!-- row -->
+		</div> <!-- container-fluid -->
+
+		
+
+
+	<script type="text/javascript">
+	
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
+
+		function appCtrl($scope, vfr){
+			$scope.newLead = {}; //empty placeholder for newLead
+
+			//gets the main lead list
+			vfr.query("Select Id, Company, Title, FirstName, LastName, Phone, Status from lead")
+			.then(
+				function (response){
+					$scope.leads = response.records;
+				},
+				function (error){console.log(error); }
+			);
+
+			//add a lead
+			$scope.addNewLead = function(){
+
+				vfr.create("Lead", JSON.stringify($scope.newLead))
+				.then(
+					function (response){
+						console.log(response);
+						$scope.newLead = {}; //ready to accept another one
+						//return a query/update/create/etc (something that itself returns a promise) to kickoff the next .then statement
+						return vfr.query("Select Id, Company, Title, FirstName, LastName, Phone, Status from lead where Id = '" +  response.id+"'");
+					})
+				.then(
+					function (response){
+						$scope.leads.push(response.records[0]);
+					},
+					function (error){console.log(error); } 
+				)
+			};
+
+			//lead update actions
+			$scope.updateLead = function(leadId, status, index){
+
+				vfr.update("Lead", leadId, JSON.stringify({"Status":status}))
+				.then(
+					function (response){
+						console.log('updated!');
+						$scope.leads[index].Status = status; //flip the client-side copy
+					},
+					function (error){console.log(error); } 
+				)
+			}
+
+		};
+	</script>
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+	</body>
+	</html>
+	
+	
+
+</apex:page>
