@@ -1,0 +1,115 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+	<c:AngularScripts />
+
+	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+	<head>		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<title>Streaming API example</title>
+
+	</head>
+
+	<body ng-controller="appCtrl">
+
+		<div class="container-fluid" >
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-info">The page assumes you have a push topic created.  For the sample use case, create one where the name is "AccountChanges" and the query is "select Id, Name from Account"</div>
+				</div>
+				
+				<div class="col-md-12">
+					<h3>This should be the list of acccounts, if ngforce/vfr is working</h3>
+
+					<table class="table table-striped">
+						<tbody>
+							<tr ng-repeat="account in accounts">
+								<td>{{account.Name}}</td>
+								<td>{{account.Id}}</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div> <!-- row -->
+		</div> <!-- container-fluid -->
+
+	<script type="text/javascript">
+	
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
+
+		function appCtrl($scope, vfr){
+
+			subscribeToTopic('AccountChanges', handleAccountMessages); //start the subscription and link to a handler
+			
+			//here's a sample of the fun of vfr
+			vfr.query("Select Id, Name from Account").then(
+
+				function (response){
+					$scope.accounts = response.records;					
+				},
+				function (error){
+					console.log(error);
+				}
+			)
+
+			//start the streaming API subscription, watching for new accounts
+    		function subscribeToTopic(topicName, messageHandler){
+    			var cometd = $.cometd;
+				console.log('starting Streaming API subscription for topic ' + topicName);
+
+				cometd.init({
+			        url: window.location.protocol+'//'+window.location.hostname+'/cometd/23.0/',
+			        requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'},
+			        appendMessageTypeToURL : false
+			    });
+
+	    		cometd.subscribe('/topic/'+topicName, function (message){messageHandler(message)});
+    		}
+
+
+    		//implement whatever you want to do with the messages from StreamingAPI
+    		function handleAccountMessages(message){
+    			console.log('Got a streaming API message');
+    			console.log(message); //logging so you can see the messages in the browser logs
+
+    			//wrap in $scope.$apply so that it will call the digest loop on an event returning.  Otherwise page doesn't update!!
+    			if (message.data.event.type === 'created'){
+    				//add it to the set of records
+    				$scope.$apply(
+	    				$scope.accounts.push(message.data.sobject)
+	    			);
+    			} else if (message.data.event.type === 'updated'){
+    				//find the matching account by Id and replace
+    				$scope.$apply(
+    					$scope.accounts[
+    						_.findIndex($scope.accounts, { 'Id': message.data.sobject.Id })
+    					] = message.data.sobject
+    				);
+    			}		
+    		}
+
+		};
+
+	</script>
+	
+	<!-- include this section for the streaming API if desired -->
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/>
+
+
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+	</body>
+	</html>
+	
+	
+
+</apex:page>
