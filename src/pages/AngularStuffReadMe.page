@@ -43,6 +43,9 @@
 								<li><a href="{!$Page.FoundationBSSF1}">Making it look like the salesforce1 UI</a></li>
 								<!-- <li><a href="{!$Page.mobileKnowledge}">SF1 themed knowledge search using SOSL with option to post to Chatter Questions.</a> Create a tab and add it to your mobile navigation.  NB: requires knowledge articles to see the results</li> -->
 								<li><a href="{!$Page.alohaUI}">Making it look like it belongs in the standard salesforce UI (aloha)</a></li>
+
+								<li><a href="{!$Page.ngmap}">Angular google maps (requires custom lcoation field)</a></li>
+
 								<li><a href="{!$Page.BootstrapExample}">I need my own themed version of bootstrap, but still need that neat namespace trick</a></li>
 							</ul>
 

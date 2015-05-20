@@ -14,6 +14,7 @@ This contains items adapated from the following:
 * the Salesforce Foundation S1-flavored bootstrap theme
 * a namespaced version of bootstrap that avoids collision with native Salesforce desktop styling
 * Salesforce streaming API implementation
+* Angular UI Google Maps (as a static resource)
 
 cdn includes for
 
