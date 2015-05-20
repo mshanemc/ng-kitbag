@@ -1,0 +1,117 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+	<c:AngularScripts />
+	<apex:includeScript value="{!URLFOR($Resource.angulargooglemaps)}"/>
+
+	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+	<head>
+		
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<title>ngMap examples</title>
+		<style type="text/css">
+			.angular-google-map-container { height: 400px; }
+		</style>
+
+	</head>
+
+	<body ng-controller="appCtrl">
+
+		<div class="container-fluid" >
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-info">This map assumes a geolocation field called Location__c on account.  You have to create it for this to work (or pick a different object where you can create a geolocation field in decimal form).  See <a href="http://angular-ui.github.io/angular-google-maps/#!/api">Angular Google Maps </a> for all the options like custom markers, etc.</div>
+				</div>
+				
+				<div class="col-md-12">
+					<h3>Map</h3>
+					<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+						<ui-gmap-marker 
+				            ng-repeat="marker in accounts" 
+				            coords="marker.Location__c" 
+				            fit="false"
+				            idkey="marker.Id">
+
+				            <ui-gmap-window>
+			                	<div>
+			                		<h5>{{marker.Name}} <a ng-href="/{{marker.Id}}" target="_blank">Open</a></h5>
+			                		<div>Phone: {{marker.Phone}}</div>
+			                		
+			                	</div>
+			            	</ui-gmap-window>
+
+				        </ui-gmap-marker>
+
+					</ui-gmap-google-map>
+					<h3>This should be the list of acccounts, if ngforce/vfr is working</h3>
+
+					<table class="table table-striped">
+						<tbody>
+							<tr ng-repeat="account in accounts">
+								<td>{{account.Name}}</td>
+								<td>{{account.Id}}</td>
+								<td>{{account.Location__c}}</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div> <!-- row -->
+		</div> <!-- container-fluid -->
+
+		
+
+
+	<script type="text/javascript">
+	
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap', 'uiGmapgoogle-maps'] );
+
+		function appCtrl($scope, vfr, uiGmapGoogleMapApi){
+			$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 3 };
+			//here's a sample of the fun of vfr
+
+			uiGmapGoogleMapApi.then(function(maps) {
+				return vfr.query("Select Id, Name, Phone, Location__c from Account");
+    		}).then(
+
+				function (response){
+					$scope.accounts = response.records;
+				},
+				function (error){
+					console.log(error);
+				}
+			);
+		};
+
+		myModule.config(function(uiGmapGoogleMapApiProvider) {
+		    uiGmapGoogleMapApiProvider.configure({
+		        //    key: 'your api key',
+		        v: '3.17',
+		        libraries: 'weather,geometry,visualization'
+		    });
+		});
+
+	</script>
+	
+	<!-- include this section for the streaming API if desired -->
+
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/> -->
+
+
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+	</body>
+	</html>
+	
+	
+
+</apex:page>
