@@ -37,7 +37,8 @@
 
 				            <ui-gmap-window>
 			                	<div>
-			                		<h5>{{marker.Name}} <a ng-href="/{{marker.Id}}" target="_blank">Open</a></h5>
+									<!-- the infowindow gets its own scope, so $parent gets back up to the ng-repeat row level -->
+			                		<h5><a ng-click="$parent.navigate($parent.marker.Id)" >{{marker.Name}}</a></h5>
 			                		<div>Phone: {{marker.Phone}}</div>
 			                		
 			                	</div>
@@ -51,7 +52,7 @@
 					<table class="table table-striped">
 						<tbody>
 							<tr ng-repeat="account in accounts">
-								<td>{{account.Name}}</td>
+								<td><a ng-click="navigate(account.Id)">{{account.Name}}</a></td>
 								<td>{{account.Id}}</td>
 								<td>{{account.Location__c}}</td>
 							</tr>
@@ -86,6 +87,17 @@
 					console.log(error);
 				}
 			);
+
+			//universal navigation that works in SF1 or in web desktop UI
+			$scope.navigate = function(recordId){
+			 
+				if (typeof sforce !== 'undefined'){
+					sforce.one.navigateToSObject(recordId);
+				} else {
+			        	window.open("/" + recordId,'_blank');
+			        }
+			 
+			}
 		};
 
 		myModule.config(function(uiGmapGoogleMapApiProvider) {
