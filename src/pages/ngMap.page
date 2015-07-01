@@ -70,11 +70,10 @@
 	
 		//here you can include the script, or move this to a VF component and then include the c: on the page.
 
-		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap', 'uiGmapgoogle-maps'] );
+		angular.module('appName', ['ngForce', 'ui.bootstrap', 'uiGmapgoogle-maps'] )
+		.controller('appCtrl', ['$scope' , 'vfr', 'uiGmapGoogleMapApi', function ($scope, vfr, uiGmapGoogleMapApi){
 
-		function appCtrl($scope, vfr, uiGmapGoogleMapApi){
 			$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 3 };
-			//here's a sample of the fun of vfr
 
 			uiGmapGoogleMapApi.then(function(maps) {
 				return vfr.query("Select Id, Name, Phone, Location__c from Account");
@@ -98,9 +97,9 @@
 			        }
 			 
 			}
-		};
+		}])
 
-		myModule.config(function(uiGmapGoogleMapApiProvider) {
+		.config(function(uiGmapGoogleMapApiProvider) {
 		    uiGmapGoogleMapApiProvider.configure({
 		        //    key: 'your api key',
 		        v: '3.17',

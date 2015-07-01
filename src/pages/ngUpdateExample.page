@@ -1,6 +1,6 @@
 <apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
 
-	<c:AngularScripts/>
+	<c:AngularScripts />
 
 	<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
 
@@ -88,9 +88,8 @@
 	
 		//here you can include the script, or move this to a VF component and then include the c: on the page.
 
-		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
-
-		function appCtrl($scope, vfr){
+		angular.module('appName', ['ngForce', 'ui.bootstrap'] )
+        .controller('appCtrl', ['$scope' , 'vfr', function ($scope, vfr){
 			$scope.newLead = {}; //empty placeholder for newLead
 
 			//gets the main lead list
@@ -134,7 +133,7 @@
 				)
 			}
 
-		};
+		}]);
 	</script>
 	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
 	</body>

@@ -1,6 +1,6 @@
 <apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
 
-    	<c:AngularScripts/>
+    	<c:AngularScripts />
 
 
     <html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
@@ -224,9 +224,8 @@
     
         //here you can include the script, or move this to a VF component and then include the c: on the page.
 
-        var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
-
-        function appCtrl($scope, vfr){
+        angular.module('appName', ['ngForce', 'ui.bootstrap'] )
+        .controller('appCtrl', ['$scope' , 'vfr', function ($scope, vfr){
 
             //here's a sample of the fun of vfr
             vfr.query("Select Id, Name, AnnualRevenue, BillingCity, Phone from Account").then(
@@ -243,7 +242,7 @@
             $scope.navigate = function(recordId){
             	sforce.one.navigateToSObject(recordId);
             }
-        };
+        }]);
 
     </script>
     

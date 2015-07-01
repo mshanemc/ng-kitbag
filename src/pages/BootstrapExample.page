@@ -1,8 +1,11 @@
 <apex:page showHeader="true" sidebar="true">
 
+	
+
 	<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapNamespaced, 'dist/css/bootstrap.css')}" media="all" />
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+
 
 	<apex:includeScript value="{!URLFOR($Resource.bootstrapNamespaced, 'dist/js/bootstrap.min.js')}" />
 	<apex:includeScript value="{!URLFOR($Resource.bootstrapNamespaced, 'dist/js/bootstrap-typeahead.js')}" />
@@ -11,8 +14,8 @@
 
 		<div class="container-fluid">
 			<div class="row">
-				<div class="alert col-md-12">
-					<h2>Video Gallery</h2>  
+				<div class="alert alert-success col-md-9">
+					<h4>So you wanna use bootstrap on pages with the salesforce native stylesheets?</h4>  
 					
 					<hr/>
 					
@@ -26,7 +29,19 @@
 
 					<a href="https://org62.my.salesforce.com/_ui/core/userprofile/UserProfilePage?u=0053000000A1Th9&tab=sfdc.ProfilePlatformFeed" class="btn btn-primary">Shane McLaughlin, Platform Architect @ salesforce.com</a> 
 				</div>
-				
+				<div class="col-md-3 alert alert-info">
+					<h4>Need a newer boostrap version?</h4>
+					<hr/>
+
+					<p>It's dead simple to roll your own version:</p>  
+					
+					<ul>
+						<li>clone current bootstrap</li>
+						<li>wrap the entire less file in bs{}</li>
+						<li>run grunt</li>
+						<li>and then zip up the dist directory</li>
+					</ul>
+				</div>
 			</div>
 
 		</div>

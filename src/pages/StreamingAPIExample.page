@@ -39,9 +39,8 @@
 	
 		//here you can include the script, or move this to a VF component and then include the c: on the page.
 
-		var myModule = angular.module('appName', ['ngForce', 'ui.bootstrap'] );
-
-		function appCtrl($scope, vfr){
+		angular.module('appName', ['ngForce', 'ui.bootstrap'] )
+        .controller('appCtrl', ['$scope' , 'vfr', function ($scope, vfr){
 
 			subscribeToTopic('AccountChanges', handleAccountMessages); //start the subscription and link to a handler
 			
@@ -92,7 +91,7 @@
     			}		
     		}
 
-		};
+		}]);
 
 	</script>
 	
