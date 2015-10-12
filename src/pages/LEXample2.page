@@ -1,0 +1,178 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="true" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+
+<c:AngularScripts />
+
+<html ng-app="appName" id="ng-app" xmlns:ng="http://angularjs.org">
+
+<head>
+
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"/>     -->    
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<!-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/> -->
+	<link rel="stylesheet" href="{!URLFOR($Resource.SLDS092, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" media="all" />
+
+	<title>LEX ngForce  -- accounts and opptys</title>
+
+</head> 
+
+<body ng-controller="appCtrl" class="slds">
+
+	<div class="slds-page-header">
+		
+		<p>This demo shows search, currency formatting, SOQL queries, and links to page views and standard Salesforce pages. </p>
+		<p>Select an Account that containts Opportunities to get started, or search. </p>
+	</div>
+
+	<div class="slds-box slds-theme--shade slds-m-around--small">
+		<input ng-model="query" class="slds-input" type="text" placeholder="Search Accounts"/>
+		
+	</div>
+
+	<div class="slds-grid">	
+		<div class="slds-col slds-size--1-of-2 slds-col--padded">
+			<div class="slds-card">
+				<div class="slds-card__header slds-text-heading--small">Accounts</div>
+				<div class="slds-card__body">
+					<table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+						<thead>
+							<tr class="slds-text-heading--label">
+								<th scope="col"><span class="lds-truncate">Name</span></th>
+								<th scope="col"><span class="lds-truncate">Id</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="account in accounts | filter:query" class="slds-hint-parent">
+								<!-- <th data-label="name" role="row">
+									<a class="slds-truncate" target="_blank" href="" ng-click="oppQuery(account.Id)">{{account.Name}}</a>
+								</th> -->
+								<td data-label="Name">
+									<span class="slds-truncate">
+										<a target="_blank" href="" ng-click="oppQuery(account.Id)">{{account.Name}}</a>
+									</span>
+								</td>
+								<td data-label="Id">
+									<span class="slds-truncate">
+										<a target="_blank" href="/{{account.Id}}">{{account.Id}}</a>
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<div class="slds-card__footer">
+					Click an account name to see opportunities
+				</div>
+			</div>
+
+		</div>
+		<div class="slds-col slds-size--1-of-2 slds-col--padded">
+			<div class="slds-card">
+				<div class="slds-card__header slds-text-heading--small" >Opportunities</div>
+				<div class="slds-card__body">
+					<table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+						<thead>
+							<tr class="slds-text-heading--label">
+								<th><span class="lds-truncate">Name</span></th>
+								<th><span class="lds-truncate">Amount</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="opp in opps" class="slds-hint-parent">
+								<!-- <th data-label="opportunity-name" role="row">
+									<a target="_blank" href="/{{opp.Id}}" class="slds-truncate">
+										{{opp.Name}}
+									</a>
+								</th> -->
+								<td data-label="Name">
+									<span class="slds-truncate">
+										<a target="_blank" href="/{{opp.Id}}">
+											{{opp.Name}}
+										</a>
+									</span>
+								</td>
+								<td data-label="Amount"><span class="slds-truncate">{{opp.Amount | currency}}</span></td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<div class="slds-card__footer">
+					Click on an opportunity name to view its detail
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+
+
+
+
+
+
+	<script type="text/javascript">
+
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		//here you can include the script, or move this to a VF component and then include the c: on the page.
+
+		angular.module('appName', ['ngForce', 'ui.bootstrap'] )
+		.controller('appCtrl', ['$scope' , 'vfr', function ($scope, vfr){
+
+
+			vfr.query("SELECT Id, Site, Type, Industry, Name, AccountNumber FROM Account limit 50")
+			.then(function(accounts){
+                // we can manipulate the results of this first query, even assign scope variables with it
+                $scope.accounts = accounts.records;
+                // var accountIds = _.pluck(accounts.records, 'Id');
+                // accountIds = _.map(accountIds, function(id){ return "'" + id + "'";}).join(", ");
+                // I'm leaving this in as an example of chaining calls. You could pull all the contacts for these
+                //     acccounts at load time if you ran this query and they would display before ever clicking on an account link
+
+                /* return vfr.query("SELECT Id, Name FROM Opportunity WHERE AccountId in (" + accountIds + ")");
+                }).then(function(Opps){
+                    $scope.opps = Opps.records;  
+                    */
+                },
+            // This last link in the chain is our error reporting link.
+            // If / When any of the above promises is rejected, or fails to resolve
+            // this method runs, and in our case logs the error.
+            function(error){
+            	log(error);
+            });
+
+
+$scope.oppQuery=function(accountid) {
+	vfr.query("SELECT Id, Name, Amount FROM Opportunity WHERE AccountId = '"+ accountid + "'")
+	.then(function(Opps){
+		$scope.opps = Opps.records;  
+	})
+
+}
+
+
+
+}]);
+
+</script>
+
+<!-- include this section for the streaming API if desired -->
+
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/jquery.cometd.js')}"/>
+	<script src="{!URLFOR($Resource.LAB_StreamingAPIDemo, '/js/json2.js')}"/> -->
+
+
+	<c:ngforce /> <!-- Include this to make sure the controller gets instantiated -->
+
+
+</body>
+</html>
+
+
+
+</apex:page>
